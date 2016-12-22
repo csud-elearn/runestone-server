@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ] || ! [ -d "$1" ]; then
+  echo "Usage: $0 DIRECTORY" >&2
+  echo "Create directory first..."
+  exit 1
+fi
+
+DIR=$1
+
+export LOCAL_USER_ID=$(id -u $USER)
+
+docker run -it --rm -e LOCAL_USER_ID=$LOCAL_USER_ID \
+       -p 8000:8000 \
+       -v $(pwd)/$DIR:/run runestone-server
