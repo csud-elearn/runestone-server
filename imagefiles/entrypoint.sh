@@ -8,6 +8,7 @@ USER_ID=${LOCAL_USER_ID:-9001}
 export RS_PASSWORD=${RS_PASSWORD:-"changeme"}
 export RS_HOST=${RS_HOST:-"0.0.0.0"}
 export RS_PORT=${RS_PORT:-"8000"}
+export RS_OPT=${RS_OPT:-""}
 
 export DB_KIND=${DB_KIND:-sqlite}
 export DB_PGSQL_DB=${DB_PGSQL_DB:-runestone}
@@ -47,7 +48,14 @@ else
    cd /opt ; chown -R user .
 
    cd /opt/web2py
-   python web2py.py --ip $RS_HOST --port $RS_PORT --password $RS_PASSWORD
+   if [ -f /run/server.crt ]; then
+      RS_SSL="-c /run/server.crt -k /run/server.key"
+   else
+      RS_SSL=""
+   fi
+   echo python web2py.py --ip $RS_HOST --port $RS_PORT --password $RS_PASSWORD $RS_SSL $RS_OPT
+   ls -l /run
+   python web2py.py $RS_SSL --ip $RS_HOST --port $RS_PORT --password $RS_PASSWORD $RS_OPT
 fi
 
 

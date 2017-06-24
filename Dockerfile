@@ -21,6 +21,8 @@ RUN  curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/do
 RUN mkdir -p /opt && \
     cd /opt && \
     git clone -b R-2.14.6 --recursive https://github.com/web2py/web2py.git && \
+    cd /opt/web2py/gluon && \
+    sed -i 's/127.0.0.1/0.0.0.0/' widget.py && \
     cd /opt/web2py/applications && \
     git clone https://github.com/RunestoneInteractive/RunestoneServer runestone && \
     cd runestone && \
