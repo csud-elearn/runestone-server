@@ -33,6 +33,7 @@ WORKDIR /opt
 
 EXPOSE 8000
 
+ADD imagefiles/routes.py /opt/web2py/routes.py
 ADD imagefiles/0.py /opt/web2py/applications/runestone/models/0.py
 ADD imagefiles/1.py /opt/web2py/applications/runestone/models/1.py
 
